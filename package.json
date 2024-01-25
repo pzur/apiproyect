@@ -1,0 +1,19 @@
+{
+  "name": "apiproyect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pzur/apiproyect.git"
+  },
+  "author": "PaoloMinaya",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pzur/apiproyect/issues"
+  },
+  "homepage": "https://github.com/pzur/apiproyect#readme"
+}
