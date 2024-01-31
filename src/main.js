@@ -69,5 +69,8 @@ async function getCategoryPreview(){
 
 }
 
-getTrendingMoviesPreview();
-getCategoryPreview();
+// HEMOS ENVIADO A NAVIGATION LAS FUNCIONES
+// getTrendingMoviesPreview();
+// getCategoryPreview();
+
+export {getCategoryPreview, getTrendingMoviesPreview}; 
