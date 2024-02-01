@@ -2,6 +2,7 @@ window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
 import { getCategoryPreview, getTrendingMoviesPreview } from "./main.js";
 
+
 function navigator(){ 
     console.log({location});
 
@@ -20,6 +21,18 @@ function navigator(){
 
 function homePage(){
     console.log('Home dff !!!');
+    // headerSection.classList.remove('header-container--long');
+    // headerSection.style.background = '';
+    // arrowBtn.classList.add('inactive');
+    // arrowBtn.classList.remove('header-arrow--white');
+    // headerTitle.classList.remove('inactive');
+    // headerCategoryTitle.classList.add('inactive');
+    // searchForm.classList.remove('inactive');
+    // trendingPreviewSection.classList.remove('inactive');
+    // categoriesPreviewSection.classList.remove('inactive');
+    // genericSection.classList.add('inactive');
+    // movieDetailSection.classList.add('inactive');
+
     getCategoryPreview();
     getTrendingMoviesPreview();
 }
