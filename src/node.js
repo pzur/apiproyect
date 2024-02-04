@@ -3,7 +3,7 @@
 const headerSection = document.querySelector('#header');
 const trendingPreviewSection = document.querySelector('#trendingPreview');
 const categoriesPreviewSection = document.querySelector('#categoriesPreview');
-const genericListSection = document.querySelector('#genericList');
+const genericSection = document.querySelector('#genericList');
 const movieDetailSection = document.querySelector('#movieDetail');
 
 // List & Containers
@@ -28,3 +28,27 @@ const movieDetailTitle = document.querySelector('.movieDetail-title');
 const movieDetailDescription = document.querySelector('.movieDetail-description');
 const movieDetailScore = document.querySelector('.movieDetail-score');
 
+// Objeto que contiene todas las variables
+const variables = {
+    headerSection,
+    trendingPreviewSection,
+    categoriesPreviewSection,
+    genericSection,
+    movieDetailSection,
+    searchForm,
+    trendisnMOviesPrevieList,
+    categoriesPreviewList,
+    movieDetailCategoriesList,
+    relatedMoviesContainer,
+    headerTitle,
+    arrowBtn,
+    headerCategoryTitle,
+    searchFormInput,
+    searchFormBtn,
+    trendingBtn,
+    movieDetailTitle,
+    movieDetailDescription,
+    movieDetailScore
+};
+
+export default variables;
