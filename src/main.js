@@ -1,4 +1,5 @@
 import {API_KEY} from "./secrets.js";
+import variables from "./node.js";
 
 // UTILIZANDO AXIOS
 // https://github.com/axios/axios?tab=readme-ov-file#installing
@@ -25,9 +26,10 @@ async function getTrendingMoviesPreview(){
     // const movies = data.results;
     // console.log({data , movies});
     
+    //permite que no se vuelva a cargar la data varias veces
+    variables.trendisnMOviesPrevieList.innerHTML='';
     
     movies.forEach(movie => {
-        const trendingPreviewMoviesContainer= document.querySelector('#trendingPreview .trendingPreview-movieList');
         const movieContainer = document.createElement('div');
         movieContainer.classList.add('movie-container')
         const movieImg = document.createElement('img');
@@ -37,7 +39,7 @@ async function getTrendingMoviesPreview(){
         'https://image.tmdb.org/t/p/w300/' + movie.poster_path
         );
         movieContainer.appendChild(movieImg);
-        trendingPreviewMoviesContainer.appendChild(movieContainer);
+        variables.trendisnMOviesPrevieList.appendChild(movieContainer);
     });
 }
 
@@ -53,24 +55,55 @@ async function getCategoryPreview(){
     // const categories = data.genres;
     // console.log('Category Preview');
     
+    //permite que no se vuelva a cargar la data varias veces
+    variables.categoriesPreviewList.innerHTML='';
+
     categories.forEach(category =>{
-        const previewCategoriesContainer = document.querySelector('#categoriesPreview .categoriesPreview-list');
+        // const previewCategoriesContainer = document.querySelector('#categoriesPreview .categoriesPreview-list');
         const categoryContainer = document.createElement('div');
         categoryContainer.classList.add('category-container');
         const categoryTitle = document.createElement('h3');
         categoryTitle.classList.add('category-title');
         categoryTitle.setAttribute('id', 'id'+ category.id);
+        categoryTitle.addEventListener('click', () => {
+            location.hash =`#category=${category.id}-${category.name}`;
+        })
         const categoryTitleText = document.createTextNode(category.name);
         categoryTitle.appendChild(categoryTitleText);
         categoryContainer.appendChild(categoryTitle);
-        previewCategoriesContainer.appendChild(categoryContainer);
-
+        variables.categoriesPreviewList.appendChild(categoryContainer);
     });
 
 }
+
+async function getMoviesByCategory(id){
+    const {data} = await api('discover/movie',{
+        params: {
+            with_genres:id,
+        }
+    });
+
+    const movies = data.results;
+
+    //permite que no se vuelva a cargar la data varias veces
+    variables.genericSection.innerHTML='';
+
+    movies.forEach(movie => {
+    const movieContainer = document.createElement('div');
+    movieContainer.classList.add('movie-container')
+    const movieImg = document.createElement('img');
+    movieImg.classList.add('movie-img');
+    movieImg.setAttribute('alt',movie.title);
+    movieImg.setAttribute('src',
+    'https://image.tmdb.org/t/p/w300/' + movie.poster_path
+    );
+    movieContainer.appendChild(movieImg);
+    variables.genericSection.appendChild(movieContainer);
+});
+};
 
 // HEMOS ENVIADO A NAVIGATION LAS FUNCIONES
 // getTrendingMoviesPreview();
 // getCategoryPreview();
 
-export {getCategoryPreview, getTrendingMoviesPreview}; 
+export {getCategoryPreview, getTrendingMoviesPreview, getMoviesByCategory}; 

@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
 import variables from "./node.js";
-import {getCategoryPreview, getTrendingMoviesPreview} from "./main.js";
+import {getCategoryPreview, getTrendingMoviesPreview, getMoviesByCategory} from "./main.js";
 
 variables.searchFormBtn.addEventListener('click', ()=> {
     location.hash = '#search=';
@@ -105,4 +105,12 @@ function categoriesPage(){
     variables.categoriesPreviewSection.classList.add('inactive');
     variables.genericSection.classList.remove('inactive');
     variables.movieDetailSection.classList.add('inactive');
-}
+
+    const[,categoryData] =location.hash.split('=');
+    const [categoryId, categoryName]= categoryData.split('-');
+
+    variables.headerCategoryTitle.innerHTML = categoryName;
+
+    getMoviesByCategory(categoryId);
+
+};
