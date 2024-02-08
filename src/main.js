@@ -13,6 +13,47 @@ const api = axios.create({
     },
 });
 
+// Utils
+
+function createMovies(movies, container){
+    //permite que no se vuelva a cargar la data varias veces
+    container.innerHTML = '';
+    movies.forEach(movie => {
+        const movieContainer = document.createElement('div');
+        movieContainer.classList.add('movie-container')
+        const movieImg = document.createElement('img');
+        movieImg.classList.add('movie-img');
+        movieImg.setAttribute('alt',movie.title);
+        movieImg.setAttribute('src',
+        'https://image.tmdb.org/t/p/w300/' + movie.poster_path
+        );
+        movieContainer.appendChild(movieImg);
+        container.appendChild(movieContainer);
+    });
+}
+
+function createCategories(category, container){
+    //permite que no se vuelva a cargar la data varias veces
+    container.innerHTML = '';
+    category.forEach(category =>{
+        // const previewCategoriesContainer = document.querySelector('#categoriesPreview .categoriesPreview-list');
+        const categoryContainer = document.createElement('div');
+        categoryContainer.classList.add('category-container');
+        const categoryTitle = document.createElement('h3');
+        categoryTitle.classList.add('category-title');
+        categoryTitle.setAttribute('id', 'id'+ category.id);
+        categoryTitle.addEventListener('click', () => {
+            location.hash =`#category=${category.id}-${category.name}`;
+        })
+        const categoryTitleText = document.createTextNode(category.name);
+        categoryTitle.appendChild(categoryTitleText);
+        categoryContainer.appendChild(categoryTitle);
+        container.appendChild(categoryContainer);
+    });
+}
+
+// Llamados API
+
 async function getTrendingMoviesPreview(){
     
     // UTILIZANDO AXIOS
@@ -26,21 +67,8 @@ async function getTrendingMoviesPreview(){
     // const movies = data.results;
     // console.log({data , movies});
     
-    //permite que no se vuelva a cargar la data varias veces
-    variables.trendisnMOviesPrevieList.innerHTML='';
+    createMovies(movies,variables.trendisnMOviesPrevieList);
     
-    movies.forEach(movie => {
-        const movieContainer = document.createElement('div');
-        movieContainer.classList.add('movie-container')
-        const movieImg = document.createElement('img');
-        movieImg.classList.add('movie-img');
-        movieImg.setAttribute('alt',movie.title);
-        movieImg.setAttribute('src',
-        'https://image.tmdb.org/t/p/w300/' + movie.poster_path
-        );
-        movieContainer.appendChild(movieImg);
-        variables.trendisnMOviesPrevieList.appendChild(movieContainer);
-    });
 }
 
 async function getCategoryPreview(){
@@ -55,25 +83,7 @@ async function getCategoryPreview(){
     // const categories = data.genres;
     // console.log('Category Preview');
     
-    //permite que no se vuelva a cargar la data varias veces
-    variables.categoriesPreviewList.innerHTML='';
-
-    categories.forEach(category =>{
-        // const previewCategoriesContainer = document.querySelector('#categoriesPreview .categoriesPreview-list');
-        const categoryContainer = document.createElement('div');
-        categoryContainer.classList.add('category-container');
-        const categoryTitle = document.createElement('h3');
-        categoryTitle.classList.add('category-title');
-        categoryTitle.setAttribute('id', 'id'+ category.id);
-        categoryTitle.addEventListener('click', () => {
-            location.hash =`#category=${category.id}-${category.name}`;
-        })
-        const categoryTitleText = document.createTextNode(category.name);
-        categoryTitle.appendChild(categoryTitleText);
-        categoryContainer.appendChild(categoryTitle);
-        variables.categoriesPreviewList.appendChild(categoryContainer);
-    });
-
+    createCategories(categories,variables.categoriesPreviewList);
 }
 
 async function getMoviesByCategory(id){

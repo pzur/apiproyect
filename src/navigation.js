@@ -28,6 +28,9 @@ function navigator(){
     } else {
         homePage();
     }
+
+    document.body.scrollTop =0;
+    document.documentElement.scrollTop=0;
 }
 
 function homePage(){
@@ -106,10 +109,12 @@ function categoriesPage(){
     variables.genericSection.classList.remove('inactive');
     variables.movieDetailSection.classList.add('inactive');
 
+    //se agrega para obtener el id del hash
     const[,categoryData] =location.hash.split('=');
     const [categoryId, categoryName]= categoryData.split('-');
 
-    variables.headerCategoryTitle.innerHTML = categoryName;
+    // se agregar el titulo de la categoria desde el api
+    variables.headerCategoryTitle.innerHTML = decodeURIComponent(categoryName);
 
     getMoviesByCategory(categoryId);
 
