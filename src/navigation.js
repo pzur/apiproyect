@@ -1,14 +1,14 @@
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
 import variables from "./node.js";
-import {getCategoryPreview, getTrendingMoviesPreview, getMoviesByCategory} from "./main.js";
+import {getCategoryPreview, getTrendingMoviesPreview, getMoviesByCategory, getMoviesBySearch, getTrendingMovies, getMovieById} from "./main.js";
 
 variables.searchFormBtn.addEventListener('click', ()=> {
-    location.hash = '#search=';
+    location.hash = '#search=' + variables.searchFormInput.value;
 });
 
 variables.arrowBtn.addEventListener('click', ()=> {
-    location.hash = '#home';
+    history.back();
 });
 variables.trendingBtn.addEventListener('click', ()=> {
     location.hash = '#trends';
@@ -63,6 +63,9 @@ function trendsPage(){
     variables.categoriesPreviewSection.classList.add('inactive');
     variables.genericSection.classList.remove('inactive');
     variables.movieDetailSection.classList.add('inactive');
+
+    variables.headerCategoryTitle.innerHTML = 'Tendencias';
+    getTrendingMovies();
 }
 
 function searchPage(){
@@ -72,18 +75,24 @@ function searchPage(){
     variables.arrowBtn.classList.remove('inactive');
     variables.arrowBtn.classList.remove('header-arrow--white');
     variables.headerTitle.classList.add('inactive');
-    variables.headerCategoryTitle.classList.remove('inactive');
+    variables.headerCategoryTitle.classList.add('inactive');
     variables.searchForm.classList.remove('inactive');
     variables.trendingPreviewSection.classList.add('inactive');
     variables.categoriesPreviewSection.classList.add('inactive');
     variables.genericSection.classList.remove('inactive');
     variables.movieDetailSection.classList.add('inactive');
+
+    //se agrega para obtener el id del hash
+    // [#search, searchValue]
+    const[,query] =location.hash.split('=');
+    //enviando la información a la función
+    getMoviesBySearch(decodeURIComponent(query));
+
 }
 
 function movieDetailsPage(){
     console.log('Movie');
     variables.headerSection.classList.add('header-container--long');
-    // variables.headerSection.style.background = '';
     variables.arrowBtn.classList.remove('inactive');
     variables.arrowBtn.classList.add('header-arrow--white');
     variables.headerTitle.classList.add('inactive');
@@ -93,6 +102,12 @@ function movieDetailsPage(){
     variables.categoriesPreviewSection.classList.add('inactive');
     variables.genericSection.classList.add('inactive');
     variables.movieDetailSection.classList.remove('inactive');
+    
+    //se agrega para obtener el id del hash
+    // [#movie, 'idpelicula']
+    const[,movieID] =location.hash.split('=');
+    //enviando la información a la función
+    getMovieById(decodeURIComponent(movieID));
 }
 
 function categoriesPage(){
